@@ -25,7 +25,7 @@ DATABASES = {
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://carpricedjangofastapi-1.onrender.com",
+    "https://carpricedjangofastapi.onrender.com",
 ]
 
 
