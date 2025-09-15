@@ -1,0 +1,64 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black min-h-screen flex justify-center items-start pt-10">
+
+<div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-w-5xl relative">
+
+    <!-- Optional Top-right Logo/Image -->
+    <img src="your-image.png" class="w-12 h-12 absolute top-4 right-4 rounded-full" alt="Logo">
+
+    <h1 class="text-3xl font-bold text-white mb-6 text-center">🚗 Car Price Prediction</h1>
+        <!-- Prediction Result -->
+    {% if prediction %}
+        <div class="mt-6 p-4 bg-green-100 rounded border border-green-300">
+            <h3 class="text-lg font-semibold text-gray-800">Prediction Result:</h3>
+            <p class="text-xl font-bold text-green-700">
+                ${{ prediction|floatformat:2 }}
+            </p>
+        </div>
+    {% endif %}
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Continuous Inputs -->
+        <h2 class="text-xl font-semibold text-white">Continuous Inputs</h2>
+        <div class="grid grid-cols-2 gap-4">
+            {% for feature, range in continuous_ranges_list %}
+                <input type="number" step="any" name="{{ feature }}"
+                    placeholder="{{ feature }} ({{ range }})"
+                    value="{{ form_data.feature|default:'' }}"
+                    class="border p-2 rounded w-full text-black">
+            {% endfor %}
+        </div>
+
+        <!-- Binary Inputs -->
+        <h2 class="text-xl font-semibold text-white mt-6">Binary Inputs</h2>
+        <div class="grid grid-cols-2 gap-4">
+            {% for feature in binary_inputs %}
+                <label class="flex items-center space-x-2 p-1 rounded hover:bg-blue-700 transition-colors duration-300">
+                    <input type="checkbox" class="w-8 h-8 rounded-sm" name="{{ feature }}" value="1">
+                    <span class="text-white">{{ feature }}</span>
+                </label>
+            {% endfor %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-6 text-center">
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded transition-colors duration-300 font-semibold">
+                Predict Price
+            </button>
+        </div>
+    </form>
+
+
+
+</div>
+</body>
+</html>
