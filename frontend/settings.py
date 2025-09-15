@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Allowed hosts
 ALLOWED_HOSTS = ["*"]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 SECRET_KEY = "your-secret-key"
 DEBUG = True
 
