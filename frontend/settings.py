@@ -9,7 +9,7 @@ ALLOWED_HOSTS = ["*"]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 SECRET_KEY = "your-secret-key"
-DEBUG = True
+DEBUG = False
 
 ASGI_APPLICATION = "frontend.asgi.application"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
