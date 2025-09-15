@@ -22,6 +22,11 @@ DATABASES = {
 }
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://carpricedjangofastapi-1.onrender.com",
+]
+
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
