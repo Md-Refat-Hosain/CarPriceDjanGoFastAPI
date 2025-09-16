@@ -75,6 +75,8 @@ def predict_view(request):
         except Exception as e:
             prediction = f"Error: {e}"
 
+    
+    form_data = request.POST if request.method == "POST" else {}
     return render(
         request,
         "dashboard/form.html",
@@ -83,5 +85,6 @@ def predict_view(request):
             "binary_inputs": binary_inputs,
             "prediction": prediction,
             "continuous_ranges_list": continuous_ranges_list,
+            "form_data": form_data,   # ✅ added
         },
     )
