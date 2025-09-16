@@ -60,6 +60,15 @@ def predict_view(request):
             data[feature] = 1 if request.POST.get(feature) else 0
 
         # Call FastAPI
+        # Wake up FastAPI first
+        try:
+            requests.get("https://carpricefastapi.onrender.com/", timeout=10)
+        except Exception:
+                pass  # Ignore errors, just a wake-up ping
+
+
+
+        
         try:
             response = requests.post(FASTAPI_URL, json=data,timeout=180)
             response.raise_for_status()
@@ -72,10 +81,6 @@ def predict_view(request):
                 prediction = float(prediction)
             else:
                 prediction = None
-
-        except Exception as e:
-            prediction = f"Error: {e}"
-
 
         except requests.exceptions.Timeout: # newly Added
                 prediction = "Server is waking up... please try again in a few seconds."
