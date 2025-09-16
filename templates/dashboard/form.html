@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,7 @@
             {% for feature, range in continuous_ranges_list %}
                 <input type="number" step="any" name="{{ feature }}"
                     placeholder="{{ feature }} ({{ range }})"
-                    value="{{ form_data.feature|default:'' }}"
+                    value="{{ form_data|get_item:feature|default:'' }}"
                     class="border p-2 rounded w-full text-black">
             {% endfor %}
         </div>
@@ -43,7 +44,7 @@
         <div class="grid grid-cols-2 gap-4">
             {% for feature in binary_inputs %}
                 <label class="flex items-center space-x-2 p-1 rounded hover:bg-blue-700 transition-colors duration-300">
-                    <input type="checkbox" class="w-8 h-8 rounded-sm" name="{{ feature }}" value="1">
+                    <input type="checkbox" class="w-8 h-8 rounded-sm" name="{{ feature }}" value="1" {% if form_data|get_item:feature %}checked{% endif %}>
                     <span class="text-white">{{ feature }}</span>
                 </label>
             {% endfor %}
