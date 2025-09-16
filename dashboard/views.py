@@ -61,9 +61,10 @@ def predict_view(request):
 
         # Call FastAPI
         try:
-            response = requests.post(FASTAPI_URL, json=data)
+            response = requests.post(FASTAPI_URL, json=data,timeout=180)
+            response.raise_for_status()
+            
             prediction = response.json().get("prediction")
-
             # ✅ Clean & format prediction
             if isinstance(prediction, list) and len(prediction) > 0:
                 prediction = float(prediction[0])
@@ -74,6 +75,12 @@ def predict_view(request):
 
         except Exception as e:
             prediction = f"Error: {e}"
+
+
+        except requests.exceptions.Timeout: # newly Added
+                prediction = "Server is waking up... please try again in a few seconds."
+        except Exception as e:
+                prediction = f"Error: {e}"
 
     
     form_data = request.POST if request.method == "POST" else {}
